@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wi-Fi Signal Strength Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-wifi"></i> Wi-Fi Signal Analyzer</h1>
+                <p class="subtitle">Real-time Network Monitoring & Visualization</p>
+            </div>
+            <div class="connection-status" id="connectionStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <button class="btn btn-primary" id="scanBtn">
+                <i class="fas fa-search"></i> Scan Networks
+            </button>
+            <button class="btn btn-success" id="startMonitoringBtn">
+                <i class="fas fa-play"></i> Start Monitoring
+            </button>
+            <button class="btn btn-danger" id="stopMonitoringBtn" disabled>
+                <i class="fas fa-stop"></i> Stop Monitoring
+            </button>
+            <button class="btn btn-secondary" id="refreshBtn">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+            <!-- Current Signal Display -->
+            <div class="card signal-display">
+                <div class="card-header">
+                    <h2><i class="fas fa-signal"></i> Current Signal</h2>
+                </div>
+                <div class="card-body">
+                    <div class="signal-info" id="currentSignal">
+                        <div class="signal-circle">
+                            <div class="signal-percentage" id="signalPercentage">--</div>
+                            <div class="signal-label">Signal Quality</div>
+                        </div>
+                        <div class="signal-details">
+                            <div class="detail-item">
+                                <span class="label">Network:</span>
+                                <span class="value" id="currentSSID">No network selected</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Strength:</span>
+                                <span class="value" id="currentStrength">-- dBm</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Frequency:</span>
+                                <span class="value" id="currentFrequency">--</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Channel:</span>
+                                <span class="value" id="currentChannel">--</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Security:</span>
+                                <span class="value" id="currentSecurity">--</span>
+                            </div>
+                            <div class="detail-item status-badge" id="statusBadge">
+                                <span class="badge badge-info">No Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Graph -->
+            <div class="card graph-container">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-line"></i> Signal Strength Timeline</h2>
+                </div>
+                <div class="card-body">
+                    <canvas id="signalChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Available Networks -->
+            <div class="card networks-list">
+                <div class="card-header">
+                    <h2><i class="fas fa-list"></i> Available Networks</h2>
+                    <span class="network-count" id="networkCount">0 networks</span>
+                </div>
+                <div class="card-body">
+                    <div class="networks-container" id="networksContainer">
+                        <div class="no-networks">
+                            <i class="fas fa-wifi"></i>
+                            <p>Click "Scan Networks" to discover available Wi-Fi networks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="card stats-panel">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-signal"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Average Signal</div>
+                                <div class="stat-value" id="avgSignal">-- dBm</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Networks Found</div>
+                                <div class="stat-value" id="totalNetworks">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Last Update</div>
+                                <div class="stat-value" id="lastUpdate">--</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-label">Data Points</div>
+                                <div class="stat-value" id="dataPoints">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Wi-Fi Signal Analyzer | Real-time Network Monitoring</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

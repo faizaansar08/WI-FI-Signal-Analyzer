@@ -1,0 +1,130 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║              ✅ DASHBOARD IS NOW WORKING - HOW TO USE               ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+🎯 STEP-BY-STEP INSTRUCTIONS:
+
+STEP 1: Make sure the server window is open
+────────────────────────────────────────────────────────────────────
+  ✓ Look for the black Command Prompt window
+  ✓ It should say "Wi-Fi Signal Strength Analyzer"
+  ✓ DO NOT CLOSE THIS WINDOW!
+  ✓ If closed, double-click: run_server.bat
+
+STEP 2: Open the dashboard
+────────────────────────────────────────────────────────────────────
+  ✓ In your browser, go to: http://localhost:5000
+  ✓ You should see the dark blue dashboard
+  ✓ Press Ctrl+Shift+R if page doesn't load
+
+STEP 3: Scan for networks
+────────────────────────────────────────────────────────────────────
+  ✓ Click the blue "🔍 Scan Networks" button at the top
+  ✓ Wait 2-3 seconds
+  ✓ Available networks will appear in the list below
+  ✓ You should see networks with signal strength bars
+
+STEP 4: Select a network (THIS IS NEW!)
+────────────────────────────────────────────────────────────────────
+  ✓ Click on ANY network in the list
+  ✓ The network will become highlighted (selected)
+  ✓ Monitoring will START AUTOMATICALLY!
+  ✓ You'll see a green notification: "✅ Monitoring started"
+
+STEP 5: Watch the real-time updates
+────────────────────────────────────────────────────────────────────
+  ✓ The circular signal indicator (left side) will update
+  ✓ The timeline graph (right side) will start showing data
+  ✓ Network details will populate (SSID, Strength, Frequency, etc.)
+  ✓ Updates happen every 2 seconds automatically
+  ✓ The graph shows the last 20 data points
+
+═══════════════════════════════════════════════════════════════════════
+
+🔧 WHAT I JUST FIXED:
+
+  ✓ Monitoring NOW STARTS AUTOMATICALLY when you click a network
+  ✓ You don't need to click "Start Monitoring" anymore
+  ✓ Better visual feedback with notifications
+  ✓ More detailed console logging for debugging
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 QUICK TEST STEPS:
+
+1. Open: http://localhost:5000
+2. Click: "🔍 Scan Networks"
+3. Click: ANY network in the list
+4. Watch: Graph should start updating!
+5. Look: Circular gauge should show signal percentage
+
+═══════════════════════════════════════════════════════════════════════
+
+📊 WHAT YOU SHOULD SEE:
+
+LEFT SIDE (Current Signal):
+  • Big circular gauge showing signal quality percentage
+  • Network name
+  • Signal strength in dBm
+  • Frequency, Channel, Security info
+  • "No Data" button changes to actual values
+
+RIGHT SIDE (Signal Strength Timeline):
+  • Line graph with blue line
+  • X-axis: Time
+  • Y-axis: Signal Strength (dBm)
+  • Line animates as new data comes in
+  • Shows last 20 measurements
+
+BOTTOM (Available Networks):
+  • List of all detected networks
+  • Each network shows:
+    - Name (SSID)
+    - Signal strength (-XX dBm)
+    - Frequency (2.4 GHz or 5 GHz)
+    - Security type
+    - Signal quality bar (colored)
+  • Selected network is highlighted
+
+═══════════════════════════════════════════════════════════════════════
+
+🐛 TROUBLESHOOTING:
+
+❌ "0 networks" showing?
+   → Click "🔍 Scan Networks" button
+   → Wait 3 seconds
+   → Make sure WiFi is enabled on your computer
+
+❌ Graph not updating?
+   → Check browser console (F12)
+   → Look for green notification "Monitoring started"
+   → Make sure you clicked on a network
+
+❌ "This site can't be reached"?
+   → Check if server window is open
+   → Restart by running: run_server.bat
+   → Wait 10 seconds, then refresh browser
+
+❌ No data in signal circle?
+   → Click a network from the list
+   → Wait 2-3 seconds for first update
+   → Check if monitoring notification appeared
+
+═══════════════════════════════════════════════════════════════════════
+
+🎊 NOW TRY IT!
+
+1. Close all browser tabs with localhost:5000
+2. Open fresh tab: http://localhost:5000
+3. Click "Scan Networks"
+4. Click on any network
+5. Watch the magic happen! ✨
+
+═══════════════════════════════════════════════════════════════════════
+
+The monitoring now starts AUTOMATICALLY when you select a network!
+No need to manually click "Start Monitoring" anymore!
+
+═══════════════════════════════════════════════════════════════════════

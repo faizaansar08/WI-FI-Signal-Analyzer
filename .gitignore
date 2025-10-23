@@ -1,0 +1,69 @@
+# Wi-Fi Signal Analyzer - Python virtual environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# Flask
+instance/
+.pytest_cache/
+
+# Node modules (if any)
+node_modules/
+
+# Machine Learning Models & Data
+*.pkl
+*.h5
+*.model
+*.csv
+wifi_data.csv
+collected_data/
+
+# Visualization outputs
+*.png
+plots/
+visualizations/
+
+# Temporary files
+*.tmp
+*.bak

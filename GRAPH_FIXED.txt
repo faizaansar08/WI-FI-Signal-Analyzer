@@ -1,0 +1,125 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║              ✅ GRAPH VISIBILITY FIXED - REFRESH NOW!               ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+🔧 WHAT I JUST FIXED:
+
+The graph was updating but invisible due to CSS height issues.
+
+CHANGES MADE:
+  ✓ Set explicit height: 300px for the chart canvas
+  ✓ Added min-height to graph container: 400px
+  ✓ Changed maintainAspectRatio to false (fills container)
+  ✓ Added subtle background color so you can SEE the canvas
+  ✓ Added border-radius for better visuals
+
+═══════════════════════════════════════════════════════════════════════
+
+🚀 HOW TO SEE THE GRAPH NOW:
+
+OPTION 1: Hard Refresh (Recommended)
+────────────────────────────────────────────────────────────────────
+  1. Go to: http://localhost:5000
+  2. Press: Ctrl + Shift + R  (hard refresh to clear cache)
+  3. Click: "Scan Networks"
+  4. Click: Any network in the list
+  5. GRAPH SHOULD NOW BE VISIBLE! 📊
+
+OPTION 2: Force Cache Bypass
+────────────────────────────────────────────────────────────────────
+  1. Close all localhost:5000 tabs
+  2. Open new tab
+  3. Go to: http://localhost:5000?v=3
+  4. Scan and select a network
+  5. Watch the graph appear!
+
+OPTION 3: Test Page
+────────────────────────────────────────────────────────────────────
+  1. Go to: http://localhost:5000/test
+  2. You should see a blue line graph IMMEDIATELY
+  3. Click "Test Scan" and "Test Monitoring"
+  4. Watch graph update in real-time
+
+═══════════════════════════════════════════════════════════════════════
+
+📊 WHAT YOU SHOULD NOW SEE:
+
+RIGHT SIDE OF DASHBOARD:
+  ┌─────────────────────────────────────────┐
+  │ 📈 Signal Strength Timeline             │
+  ├─────────────────────────────────────────┤
+  │                                         │
+  │    [VISIBLE GRAPH AREA]                │
+  │    - Blue line showing signal strength │
+  │    - X-axis: Time                      │
+  │    - Y-axis: dBm (-100 to -20)        │
+  │    - Updates every 2 seconds           │
+  │    - Slight background tint            │
+  │                                         │
+  └─────────────────────────────────────────┘
+
+The graph will have:
+  • Height: 300 pixels (clearly visible!)
+  • Light background so you can see the area
+  • Blue animated line when monitoring
+  • Grid lines and axis labels
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 STEP-BY-STEP TEST:
+
+1. Hard refresh: Ctrl + Shift + R
+
+2. You should see the graph area (even if empty)
+   - Look for "Signal Strength Timeline" section
+   - Should have a rectangular area with slight background
+
+3. Click "🔍 Scan Networks"
+   - Networks list should populate
+
+4. Click on any network
+   - Green notification: "Monitoring started"
+   - Graph line should START DRAWING
+   - Updates every 2 seconds
+
+5. Watch the magic! ✨
+   - Blue line animates from left to right
+   - Shows last 20 data points
+   - Signal circle updates too
+
+═══════════════════════════════════════════════════════════════════════
+
+🐛 IF STILL NOT VISIBLE:
+
+Press F12 → Console tab → Look for errors
+Press F12 → Elements tab → Search for "signalChart"
+  - Should show: <canvas id="signalChart" ...>
+  - Check if it has height/width attributes
+
+Try test page: http://localhost:5000/test
+  - This has dummy data that shows IMMEDIATELY
+  - Proves Chart.js is working
+
+Clear ALL browser cache:
+  - Ctrl + Shift + Delete
+  - Select "Cached images and files"
+  - Click "Clear data"
+  - Refresh page
+
+═══════════════════════════════════════════════════════════════════════
+
+✅ THE GRAPH IS NOW FIXED!
+
+The canvas element now has:
+  • Explicit dimensions (100% width, 300px height)
+  • Visible background (semi-transparent white)
+  • Proper container sizing
+  • Chart.js configured to fill the space
+
+═══════════════════════════════════════════════════════════════════════
+
+🎊 REFRESH YOUR BROWSER NOW! (Ctrl + Shift + R)
+
+═══════════════════════════════════════════════════════════════════════

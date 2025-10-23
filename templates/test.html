@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quick Test - WiFi Analyzer</title>
+    <style>
+        body {
+            background: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .status {
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background: #16213e;
+        }
+        .success { border-left: 4px solid #4caf50; }
+        .error { border-left: 4px solid #f44336; }
+        .info { border-left: 4px solid #2196f3; }
+        button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #2196f3;
+            color: white;
+        }
+        button:hover {
+            background: #1976d2;
+        }
+        #output {
+            background: #0f0f0f;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        canvas {
+            background: white !important;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 WiFi Analyzer - Quick Test Page</h1>
+    
+    <div class="status info">
+        <h3>Connection Status</h3>
+        <div id="connectionStatus">Connecting...</div>
+    </div>
+    
+    <div>
+        <button onclick="testScan()">🔍 Test Scan</button>
+        <button onclick="testMonitoring()">▶️ Test Monitoring</button>
+        <button onclick="clearOutput()">🗑️ Clear Output</button>
+    </div>
+    
+    <div class="status success">
+        <h3>📊 Test Chart (Should show a line)</h3>
+        <canvas id="testChart" width="800" height="400"></canvas>
+    </div>
+    
+    <div class="status info">
+        <h3>📋 Output Log</h3>
+        <div id="output">Waiting for actions...</div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@4.5.4/dist/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        let socket;
+        let testChart;
+        let output = [];
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            output.push(`[${timestamp}] ${message}`);
+            document.getElementById('output').textContent = output.join('\n');
+        }
+        
+        function clearOutput() {
+            output = [];
+            document.getElementById('output').textContent = 'Output cleared...';
+        }
+        
+        // Initialize Socket.IO
+        log('Connecting to server...');
+        socket = io('http://localhost:5000');
+        
+        socket.on('connect', function() {
+            log('✅ Connected to server!');
+            document.getElementById('connectionStatus').innerHTML = '<strong style="color: #4caf50;">✅ CONNECTED</strong>';
+        });
+        
+        socket.on('disconnect', function() {
+            log('❌ Disconnected from server');
+            document.getElementById('connectionStatus').innerHTML = '<strong style="color: #f44336;">❌ DISCONNECTED</strong>';
+        });
+        
+        socket.on('networks_update', function(data) {
+            log('📶 Networks update received!');
+            log(`   Found ${data.count} network(s)`);
+            data.networks.forEach((n, i) => {
+                log(`   ${i+1}. ${n.ssid} - ${n.signal_strength} dBm (${n.signal_quality}%)`);
+            });
+        });
+        
+        socket.on('signal_update', function(data) {
+            log('📡 Signal update received!');
+            log(`   SSID: ${data.ssid}`);
+            log(`   Signal: ${data.signal_strength} dBm (${data.signal_quality}%)`);
+            
+            // Update test chart
+            updateTestChart(data.signal_strength);
+        });
+        
+        socket.on('monitoring_status', function(data) {
+            log(`📊 Monitoring status: ${data.status}`);
+        });
+        
+        // Initialize test chart
+        const ctx = document.getElementById('testChart').getContext('2d');
+        testChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Signal Strength (dBm)',
+                    data: [],
+                    borderColor: '#2196F3',
+                    backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: -100,
+                        max: -20
+                    }
+                }
+            }
+        });
+        
+        log('✅ Test chart initialized');
+        
+        // Add some dummy data to test chart
+        for (let i = 0; i < 10; i++) {
+            testChart.data.labels.push(`T${i}`);
+            testChart.data.datasets[0].data.push(-50 + Math.random() * 10);
+        }
+        testChart.update();
+        log('✅ Test chart populated with dummy data');
+        
+        function updateTestChart(signal) {
+            const time = new Date().toLocaleTimeString();
+            testChart.data.labels.push(time);
+            testChart.data.datasets[0].data.push(signal);
+            
+            // Keep only last 20 points
+            if (testChart.data.labels.length > 20) {
+                testChart.data.labels.shift();
+                testChart.data.datasets[0].data.shift();
+            }
+            
+            testChart.update();
+        }
+        
+        function testScan() {
+            log('🔍 Sending scan request...');
+            socket.emit('scan_once');
+        }
+        
+        function testMonitoring() {
+            log('▶️ Starting monitoring...');
+            socket.emit('start_monitoring', {});
+        }
+    </script>
+</body>
+</html>

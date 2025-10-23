@@ -1,0 +1,24 @@
+{
+  "name": "wifi-signal-analyzer",
+  "version": "1.0.0",
+  "description": "Real-time Wi-Fi Signal Strength Analyzer with live visualization",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py",
+    "test-scanner": "python wifi_scanner.py"
+  },
+  "keywords": [
+    "wifi",
+    "signal",
+    "analyzer",
+    "monitoring",
+    "flask",
+    "socketio",
+    "real-time"
+  ],
+  "author": "Computer Networks Project Team",
+  "license": "MIT",
+  "dependencies": {
+    "python": ">=3.8"
+  }
+}
