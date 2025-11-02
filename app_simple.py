@@ -196,9 +196,15 @@ def handle_scan_once():
         emit('error', {'message': str(e)})
 
 if __name__ == '__main__':
+    import os
+    
+    # Get port from environment variable (for deployment) or use 3000
+    port = int(os.environ.get('PORT', 3000))
+    host = os.environ.get('HOST', '0.0.0.0')
+    
     print("\n" + "="*70)
     print("📡 Server Configuration:")
-    print(f"   URL: http://localhost:3000")
+    print(f"   URL: http://localhost:{port}")
     print(f"   Mode: Threading (no eventlet)")
     print(f"   WiFi Scanner: ✅ Ready")
     print("="*70)
@@ -207,7 +213,7 @@ if __name__ == '__main__':
     print("="*70 + "\n")
     
     try:
-        socketio.run(app, host='0.0.0.0', port=3000, debug=False, use_reloader=False)
+        socketio.run(app, host=host, port=port, debug=False, use_reloader=False)
     except KeyboardInterrupt:
         print("\n\n⏹️  Server stopped by user")
         sys.exit(0)
